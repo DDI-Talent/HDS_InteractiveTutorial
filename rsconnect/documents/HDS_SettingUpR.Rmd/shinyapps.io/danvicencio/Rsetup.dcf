@@ -1,0 +1,12 @@
+name: Rsetup
+title: Rsetup
+username: danvicencio
+account: danvicencio
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12379840
+bundleId: 8973415
+url: https://danvicencio.shinyapps.io/Rsetup/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
