@@ -1,0 +1,290 @@
+---
+title: "Interactive Coding Exercise - Visualisation"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: >
+  In this tutorial, we will walk you through basic plotting exercises using ggplot2 in R.
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(ggplot2)
+library(dplyr)
+library(gradethis)
+
+# Load dataset we wish to use here.
+brfss <- read.csv("Data/dataset-brfss-2013-subset1.csv")
+
+tutorial_options(exercise.checker = gradethis::grade_learnr)
+
+knitr::opts_chunk$set(error = TRUE)
+
+```
+
+## Live Practice{#p}
+
+Below you will find a "practice box" mimicking an R script just like one you can create in RStudio.
+
+### Step 1: Install and load required libraries
+
+#### Let's install and load the `ggplot2` package.
+
+```{r load-package, exercise = TRUE}
+# We have installed the package for you, now please load the library.
+# Hint: Use library() to load the package.
+```
+
+```{r load-package-hint}
+# Use the install.packages() function first
+```
+
+```{r load-package-solution}
+# Solution;
+
+# The load the package to utilise.
+library(ggplot2)
+```
+
+```{r load-package-check}
+"Great job! The package is now loaded, it is ready to use now."
+```
+
+---
+
+### Step 2: Load the BRFSS Dataset
+
+#### Let's load the BRFSS dataset and assign it to a variable called `brfss`.
+
+```{r load-data, exercise = TRUE}
+# Load the dataset provided and assign it to a variable called `brfss`.
+# Hint: Use read.csv() to load the data.
+```
+
+```{r load-data-hint}
+# The dataset is in CSV format. Use `read.csv("path/to/file.csv")` to load it.
+```
+
+```{r load-data-solution}
+# Solution;
+brfss <- read.csv("Data/dataset-brfss-2013-subset1.csv") # This will usually change depending on where you have your data or the format. 
+```
+
+```{r load-data-check}
+"Great job! The dataset is loaded and ready for exploration."
+```
+
+---
+
+### Step 3: Bar Plot of Education Levels
+
+#### Create a bar plot to show the distribution of education levels in the BRFSS dataset.
+
+```{r education-barplot, exercise = TRUE}
+# Now that you have loaded the dataset and named it brfss, use ggplot2 to create a bar plot showing the distribution of the 'education' column.
+
+
+```
+
+```{r education-barplot-hint}
+# Hint: ggplot('your data here', aes(x = factor('education variable here'))) + geom_bar()
+
+# Use `geom_bar()` to create a bar plot and set the x aesthetic to `factor(education)` to ensure it is treated as categorical.
+```
+
+```{r education-barplot-solution}
+# Solution
+ggplot(brfss, aes(x = factor(education))) + 
+  geom_bar() 
+```
+
+```{r education-barplot-check}
+grade_this({
+  # Check if .result is a ggplot object
+  if (inherits(.result, "ggplot") &&
+      # Check if the data used in the plot is `brfss`
+      identical(.result$data, brfss) &&
+      # Check if x and y mappings are correct
+      rlang::quo_text(.result$mapping$x) == "factor(education)" &&
+      # Check if there is a geom_boxplot layer
+      any(sapply(.result$layers, function(layer) inherits(layer$geom, "GeomBar")))
+  ) {
+    pass("Well done! You've correctly plotted the bar plot for education level.")
+  } else {
+    fail("Try again. Ensure you use `ggplot(brfss, aes(x = factor(education))) + 
+  geom_bar()`.")
+  }
+})
+```
+---
+
+### Step 4: Histogram of BMI
+
+#### Create a histogram to display the distribution of BMI among respondents.
+
+```{r bmi-histogram, exercise = TRUE}
+# Use ggplot2 to create a histogram of the 'bmi' column.
+
+
+```
+
+```{r bmi-histogram-hint}
+# Hint: ggplot('your data here', aes(x = 'bmi variable here')) + geom_histogram(bins = 15)
+
+# Use `geom_histogram(bins = 15)` to specify the number of bins in the histogram.
+```
+
+```{r bmi-histogram-solution}
+# Solution
+ggplot(brfss, aes(x = bmi)) + 
+  geom_histogram(bins = 15) 
+```
+
+```{r bmi-histogram-check}
+grade_this({
+  # Check if .result is a ggplot object
+  if (inherits(.result, "ggplot") &&
+      # Check if the data used in the plot is `brfss`
+      identical(.result$data, brfss) &&
+      # Check if x and y mappings are correct
+      rlang::quo_text(.result$mapping$x) == "bmi" &&
+      # Check if there is a geom_boxplot layer
+      any(sapply(.result$layers, function(layer) inherits(layer$geom, "GeomBar")))
+  ) {
+    pass("Well done! You've correctly plotted a histogram for BMI.")
+  } else {
+    fail("Try again. Ensure you use `ggplot(brfss, aes(x = bmi)) + 
+  geom_histogram(bins = 15)`.")
+  }
+})
+```
+---
+
+### Step 5: Bar Plot of Fruit and Vegetable Consumption
+
+#### Create a bar plot to show the number of respondents consuming fruits and vegetables.
+
+```{r diet-barplot, exercise = TRUE}
+# Use ggplot2 to create a bar plot for fruit and vegetable consumption.
+
+```
+
+```{r diet-barplot-hint}
+# Hint: ggplot('your data here', aes(x = factor('fruits variable here'))) + geom_bar()
+
+# Set the x aesthetic to `factor(fruits)` for fruit consumption and use `geom_bar()`.
+```
+
+```{r diet-barplot-solution}
+# Solution
+ggplot(brfss, aes(x = factor(fruits))) + 
+  geom_bar()
+```
+
+
+```{r diet-barplot-check}
+grade_this({
+  # Check if .result is a ggplot object
+  if (inherits(.result, "ggplot") &&
+      # Check if the data used in the plot is `brfss`
+      identical(.result$data, brfss) &&
+      # Check if x and y mappings are correct
+      rlang::quo_text(.result$mapping$x) == "factor(fruits)" &&
+      # Check if there is a geom_boxplot layer
+      any(sapply(.result$layers, function(layer) inherits(layer$geom, "GeomBar")))
+  ) {
+    pass("Well done! You've correctly plotted the barplot for fruit and vegetable consumption.")
+  } else {
+    fail("Try again. Ensure you use `ggplot(brfss, aes(x = factor(fruits))) + 
+  geom_bar()`.")
+  }
+})
+```
+---
+
+### Step 6: Scatter Plot of Physical Activity and BMI
+
+#### Create a scatter plot to explore the relationship between physical activity and BMI.
+
+```{r activity-bmi-scatter, exercise = TRUE}
+# Use ggplot2 to create a scatter plot with 'activetimes' on the x-axis and 'bmi' on the y-axis.
+
+```
+
+```{r activity-bmi-scatter-hint}
+# Hint: ggplot('your data here', aes(x = 'activetimes variable here', y = 'bmi variable here')) + geom_point()
+
+# Use `geom_point()` to create a scatter plot, setting 'activetimes' on the x-axis and 'bmi' on the y-axis.
+```
+
+```{r activity-bmi-scatter-solution}
+# Solution
+ggplot(brfss, aes(x = activetimes, y = bmi)) + 
+  geom_point() 
+```
+
+```{r activity-bmi-scatter-check}
+grade_this({
+  # Check if .result is a ggplot object
+  if (inherits(.result, "ggplot") &&
+      # Check if the data used in the plot is `brfss`
+      identical(.result$data, brfss) &&
+      # Check if x and y mappings are correct
+      rlang::quo_text(.result$mapping$x) == "activetimes" &&
+      rlang::quo_text(.result$mapping$y) == "bmi" &&
+      # Check if there is a geom_boxplot layer
+      any(sapply(.result$layers, function(layer) inherits(layer$geom, "GeomPoint")))
+  ) {
+    pass("Well done! You've correctly plotted the scatterplot of activetimes and BMI.")
+  } else {
+    fail("Try again. Ensure you use `ggplot(brfss, aes(x = activetimes, y = bmi)) + 
+  geom_point()`.")
+  }
+})
+```
+---
+
+### Step 7: Box Plot of BMI by Education Level
+
+#### Create a box plot to compare BMI across different education levels.
+
+```{r bmi-education-boxplot, exercise = TRUE}
+# Use ggplot2 to create a box plot of 'bmi' by 'education' levels.
+
+```
+
+```{r bmi-education-boxplot-hint}
+# Hint: ggplot('your data here', aes(x = factor('education variable here'), y = 'bmi variable here')) + geom_boxplot() 
+
+# Use `geom_boxplot()` to show the spread of 'bmi' across different 'education' levels.
+```
+
+```{r bmi-education-boxplot-solution}
+# Solution
+ggplot(brfss, aes(x = factor(education), y = bmi)) + 
+  geom_boxplot() 
+```
+
+```{r bmi-education-boxplot-check}
+grade_this({
+  # Check if .result is a ggplot object
+  if (inherits(.result, "ggplot") &&
+      # Check if the data used in the plot is `brfss`
+      identical(.result$data, brfss) &&
+      # Check if x and y mappings are correct
+      rlang::quo_text(.result$mapping$x) == "factor(education)" &&
+      rlang::quo_text(.result$mapping$y) == "bmi" &&
+      # Check if there is a geom_boxplot layer
+      any(sapply(.result$layers, function(layer) inherits(layer$geom, "GeomBoxplot")))
+  ) {
+    pass("Well done! You've correctly plotted the boxplot of BMI by education level.")
+  } else {
+    fail("Try again. Ensure you use `ggplot(brfss, aes(x = factor(education), y = bmi)) + geom_boxplot()`.")
+  }
+})
+```
+---
+
+This tutorial provides hands-on exercises in basic plotting with ggplot2 using the BRFSS dataset.
