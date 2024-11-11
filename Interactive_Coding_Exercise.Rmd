@@ -49,7 +49,15 @@ library(ggplot2)
 ```
 
 ```{r load-package-check}
-"Great job! The package is now loaded, it is ready to use now."
+grade_this({
+  if ("ggplot2" %in% .packages()) {
+    pass("Great job! The ggplot2 package is loaded and ready to use.")
+  } else {
+    fail("It looks like ggplot2 isn’t loaded. Make sure you load it by running `library(ggplot2)`.")
+  }
+
+
+})
 ```
 
 ---
@@ -57,23 +65,44 @@ library(ggplot2)
 ### Step 2: Load the BRFSS Dataset
 
 #### Let's load the BRFSS dataset and assign it to a variable called `brfss`.
+#### Can you show the five first rows of the dataset.
 
 ```{r load-data, exercise = TRUE}
-# Load the dataset provided and assign it to a variable called `brfss`.
-# Hint: Use read.csv() to load the data.
+# We have loaded the data set and assigned it to a variable called `brfss`.
+# Hint: use a function to have a look of the dataset.
+
 ```
 
 ```{r load-data-hint}
-# The dataset is in CSV format. Use `read.csv("path/to/file.csv")` to load it.
+# The dataset is in CSV format. We used `read.csv("path/to/file.csv")` to load it.
+# The dataset is now in your environment with the name `brfss`.
+# Use the `head()` function to view the five first rows.
+
 ```
 
 ```{r load-data-solution}
 # Solution;
-brfss <- read.csv("Data/dataset-brfss-2013-subset1.csv") # This will usually change depending on where you have your data or the format. 
+head(brfss)
+
 ```
 
 ```{r load-data-check}
-"Great job! The dataset is loaded and ready for exploration."
+library(gradethis)
+
+grade_this({
+  # Convert .user_code to a character string for inspection
+  code_as_text <- as.character(rlang::expr_text(.user_code))
+  
+  # Define a pattern to look for the correct structure of the code
+  correct_pattern <- "head(brfss)"
+  
+  # Check if the student's code matches the expected pattern
+  if (grepl(correct_pattern, code_as_text, fixed = TRUE)) {
+    pass("Well done! You’ve successfully used `head(brfss)` to view the top rows of the dataset.")
+  } else {
+    fail("Try again. Ensure you use `head(brfss)` to view the first few rows of the dataset.")
+  }
+})
 ```
 
 ---
