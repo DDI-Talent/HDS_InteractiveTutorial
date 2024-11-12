@@ -1,0 +1,380 @@
+---
+title: "Set Up"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: >
+  In this topic, we will walk you through the process of installing R and RStudio on your computer.
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(ggplot2)
+library(formatR)
+library(remotes)
+
+tutorial_options(
+  exercise.timelimit = 60,
+  # A simple checker function that just returns the message in the check chunk
+  exercise.checker = function(check_code, ...) {
+    list(
+      message = eval(parse(text = check_code)),
+      correct = logical(0),
+      type = "info",
+      location = "append"
+    )
+  }
+)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+## Welcome
+Whether downloading to your computer or accessing via Noteable, R and RStudio are completely free.
+
+### Installing R
+The following tutorial shows you how to install R on your computer. Select the relevant video depending on whether your computer is running Windows or Mac OSX. You do not need to watch both.
+
+### Outline
+
+This tutorial will help you set up your computer to use R. It is for you if you need to:
+
+* Install R on your computer
+* Install the RStudio Integrated Development Environment (IDE)
+* Install the `tidyverse` R package
+
+You can skip this tutorial if you've already done these things.
+
+### Is this tutorial for you?
+
+Do you need to work through the tutorial? Take the quiz below to find out.
+
+
+```{r quiz1, echo = FALSE}
+question("Check all that you have NOT done:",
+  answer("installed R on my computer", message = "* Install R"),
+  answer("installed the RStudio IDE", message = "* Install RStudio IDE"),
+  answer("installed the tidyverse R package", message = "* Install Packages"),
+  answer("None of the above. I've done them all.", correct = TRUE, message = "You can skip this tutorial! Click the link below to go straight to the practice stage."),
+  type = "multiple",
+  incorrect = "This tutorial is here to help! To get set up read:"
+)
+```
+Jump to [Practice](#p)
+
+## Install R
+
+### How to install R
+
+*Note: When you follow the links shown in the video below, you will be taken to the most recent version of R - version 4.1.3 ("One Push-Up") - which was updated on 10 March 2022. This video was recorded prior to this date, so the version in the video appears as version 3.6. Downloading the newest version 4.1.3 is unlikely to cause any issues for new users, but it is always good to be aware of which version you are using, because sometimes this can have repercussions for older code you might be running. The following videos have been shared by the Health Data Science course.*
+
+
+### Do you have a Windows, Mac or other device?
+```{r quiz2, echo = FALSE}
+question("What is your device's operating system?",
+  answer("Windows", message = "* Go to the 'Windows' tab or click continue"),
+  answer("Mac", message = "* Go to the 'Mac' tab or press the link below:"),
+  answer("Other", message = "* Please refer to the 'Noteable' tab or press the link below:"),
+  answer("I've them all.", correct = TRUE, message = "You are welcome to watch all videos!"),
+  type = "multiple",
+  incorrect = "This tutorial is here to help! To get set up read:"
+)
+```
+
+* [Mac](#mac)   
+* [Noteable](#n)
+
+## Windows
+### Installing R for Windows (03:20)
+
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_rjmwhomf&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_pcnrbsma" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Installing R for Windows"></iframe>
+
+### Test your knowledge
+
+```{r quiz3, echo=FALSE}
+quiz(caption = "Quiz - Install R",
+  question("Is R free to download and use?",
+    answer("Yes!", correct = TRUE, message = "R is free _and_ open source, which means that anyone can read, use, and copy the source code of the R language."),
+    answer("No.")
+  ),
+  question("Where do you download R?",
+    answer("www.rstudio.com/download"),
+    answer("[cran.r-project.org](http://cloud.r-project.org)", correct = TRUE, message = "You can also download R from [cloud.r-project.org](http://cloud.r-project.org)"),
+    answer("www.r-project.org", message = "Good try, but not exactly. www.r-project.org doesn't provide a download link, but it does provide a link to one the websites above."),
+    answer("www.r.com"),
+    allow_retry = TRUE
+  ),
+  question("How often should you update R?",
+    answer("Everytime you use it", message = "This will be too often unless you use R very rarely!"),
+    answer("About once a year", correct = TRUE, "A new version of R is released about once a year. Update sooner if you encounter a bug that you cannot explain."),
+    answer("Never", message = "A new version of R is released about once a year. I'll assume that you are using the newest version of R, which will be the fastest version with the fewest unexpected behaviors." ),
+    allow_retry = TRUE
+  )
+)
+```
+
+#### If you were successful installing R and don't need to install R in a Mac OS please continue to the [Install RStudio](#is) section. Otherwise, please refer to [Noteable](#n).
+
+## Mac{#mac}
+*Note: You may be asked for a password before you are allowed to install the new R software on your Mac.*
+
+### Installing R for Mac (03:46)
+
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_6ehnxok0&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_d27ik0qk" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Installing R for Mac"></iframe>
+
+### Test your knowledge
+
+```{r quiz4, echo=FALSE}
+quiz(caption = "Quiz - Install R",
+  question("Is R free to download and use?",
+    answer("Yes!", correct = TRUE, message = "R is free _and_ open source, which means that anyone can read, use, and copy the source code of the R language."),
+    answer("No.")
+  ),
+  question("Where do you download R?",
+    answer("www.rstudio.com/download"),
+    answer("[cran.r-project.org](http://cloud.r-project.org)", correct = TRUE, message = "You can also download R from [cloud.r-project.org](http://cloud.r-project.org)"),
+    answer("www.r-project.org", message = "Good try, but not exactly. www.r-project.org doesn't provide a download link, but it does provide a link to one the websites above."),
+    answer("www.r.com"),
+    allow_retry = TRUE
+  ),
+  question("How often should you update R?",
+    answer("Everytime you use it", message = "This will be too often unless you use R very rarely!"),
+    answer("About once a year", correct = TRUE, "A new version of R is released about once a year. Update sooner if you encounter a bug that you cannot explain."),
+    answer("Never", message = "A new version of R is released about once a year. I'll assume that you are using the newest version of R, which will be the fastest version with the fewest unexpected behaviors." ),
+    allow_retry = TRUE
+  )
+)
+```
+
+#### If you were successful installing R please continue to the [Install RStudio](#is) section. Otherwise, please refer to [Noteable](#n).
+
+## Noteable{#n}
+
+*Note: This section is only necessary if you have been unable to install R and RStudio Desktop in your device.*
+
+We hope that you are able to install R and RStudio directly on your computer but realise that in some situations this might not be possible, for example, if you have a work computer and your access is restricted.  If this is the case, no need to worry, Noteable can provide an alternative!
+
+Noteable is a cloud-based alternative to RStudio developed by EDINA (Edinburgh Data and Information Access) at the University of Edinburgh. You don't need to install any software on your computer to use it. If you have been successful in installing R and RStudio, it is not necessary for you to watch the video below, but you are welcome to out of interest. Noteable also allows you to access RStudio and your workspace from different devices. The following video shows you how to access Noteable and some of the functionalities of the system.
+
+#### If you are comfortable using noteable and are now ready to continue please go to the [Practice here](#p) tab.
+
+### Introduction to Noteable (09:56)
+
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_348b6pjg&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_5dewmm0q" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Introduction to Noteable"></iframe>
+
+## Install RStudio{#is}
+
+It is possible to use R without installing RStudio but RStudio makes coding in R much easier and almost everyone now uses RStudio. In the early days of R, before RStudio was invented, people would run R code in the computer terminal, conjuring up images of that old-school 80s green font tech vibe. 
+
+All of the instructions in this course assume that you are using RStudio.
+
+### How to install RStudio
+The following tabs show you videos on how to install RStudio on your computer. Select the relevant video depending on whether your computer is running [Windows](#w) or [Mac](#mac2) OSX. You do not need to watch both.
+
+RStudio is an IDE for R. What does that mean? Well, if you think of R as a language, which it is, you can think of RStudio as a program or workspace that helps you write, edit and test your code. RStudio makes programming in R much easier and I suggest that you use it!
+
+## Installing RStudio for Windows{#w}
+
+### (3:58)
+
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_vofip4cg&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_stdindvq" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Installing RStudio for Windows"></iframe>
+
+### Test your knowledge
+
+```{r quiz5, echo=FALSE}
+quiz(caption = "Quiz - Install RStudio",
+  question("What is the RStudio IDE?",
+    answer("An application that makes it easier to use R.", correct = TRUE, message = "RStudio organizes your workspace and makes it easier to write, use, debug, and save R code. I highly recommend it and will rely on the RStudio IDE in several tutorials."),
+    answer("An application that let's you use R without writing any code.", message = "And thank goodness! Code provides a reproducible record of your work, which is essential for data science."),
+    answer("A spreadsheet program like Microsoft Excel."),
+    answer("A robot.", message = "R and RStudio are two separate things. R is a language, like English. Think of RStudio as a program that helps you use the language, kind of like how a word processing program helps you write in English."),
+    allow_retry = TRUE
+  ),
+  question("Is the RStudio IDE free to download and use?",
+    answer("Yes!", correct = TRUE, message = "Like R, RStudio is free and open-source. There do exist professional versions of RStudio with enhanced features, but we will not rely on those features in these tutorials."),
+    answer("No.", message = "Like R, RStudio is free and open-source. There do exist professional versions of RStudio with enhanced features, but we will not rely on those features in these tutorials.")
+  ),
+  question("Where do you download RStudio?",
+    answer("www.rstudio.com/download", correct = TRUE, message = "For these tutorials, download and install the RStudio Desktop Open Source License."),
+    answer("[cloud.r-project.org](http://cloud.r-project.org)", message = "This is where you download R, not RStudio."),
+    answer("www.r-project.org"),
+    answer("[cran.rstudio.org](http://cran.rstudio.org)"),
+    allow_retry = TRUE
+  ),
+  question("Do you need to install R if you already have RStudio?",
+    answer("Yes.", correct = TRUE),
+    answer("No.", message = "R does not come with RStudio; you need to install R separately.")
+  )
+)
+```
+
+## Installing RStudio for Mac{#mac2}
+
+### (3:34)
+
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_zql53iva&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_dxn6vclt" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Installing RStudio for Mac"></iframe>
+
+### Test your knowledge
+
+```{r quiz6, echo=FALSE}
+quiz(caption = "Quiz - Install RStudio",
+  question("What is the RStudio IDE?",
+    answer("An application that makes it easier to use R.", correct = TRUE, message = "RStudio organizes your workspace and makes it easier to write, use, debug, and save R code. I highly recommend it and will rely on the RStudio IDE in several tutorials."),
+    answer("An application that let's you use R without writing any code.", message = "And thank goodness! Code provides a reproducible record of your work, which is essential for data science."),
+    answer("A spreadsheet program like Microsoft Excel."),
+    answer("A robot.", message = "R and RStudio are two separate things. R is a language, like English. Think of RStudio as a program that helps you use the language, kind of like how a word processing program helps you write in English."),
+    allow_retry = TRUE
+  ),
+  question("Is the RStudio IDE free to download and use?",
+    answer("Yes!", correct = TRUE, message = "Like R, RStudio is free and open-source. There do exist professional versions of RStudio with enhanced features, but we will not rely on those features in these tutorials."),
+    answer("No.", message = "Like R, RStudio is free and open-source. There do exist professional versions of RStudio with enhanced features, but we will not rely on those features in these tutorials.")
+  ),
+  question("Where do you download RStudio?",
+    answer("www.rstudio.com/download", correct = TRUE, message = "For these tutorials, download and install the RStudio Desktop Open Source License."),
+    answer("[cloud.r-project.org](http://cloud.r-project.org)", message = "This is where you download R, not RStudio."),
+    answer("www.r-project.org"),
+    answer("[cran.rstudio.org](http://cran.rstudio.org)"),
+    allow_retry = TRUE
+  ),
+  question("Do you need to install R if you already have RStudio?",
+    answer("Yes.", correct = TRUE),
+    answer("No.", message = "R does not come with RStudio; you need to install R separately.")
+  )
+)
+```
+
+## Install Packages
+
+### How to install R packages (10:21)
+
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_2yfie5da&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_l8fstg9b" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Installing R Packages"></iframe>
+
+### Test your knowledge
+
+```{r names, echo = FALSE}
+quiz(caption = "Quiz - Working with Packages",
+  question("What command do you use to install packages?",
+    answer("`library()`", message = "We will see what `library()` does later."),
+    answer("`install.packages()`", correct = TRUE),
+    answer("`install_packages()`"),
+    answer("There is no command. You must visit [cran.r-project.org](http://cran.r-project.org) and download packages manually.", message = "R makes it easy to download packages. You connect to the internet and then run one of the commands above."),
+    allow_retry = TRUE
+  ),
+  question("How often do you need to install a package on your computer?",
+    answer("Every time you restart R"),
+    answer("Every time you restart your computer"),
+    answer("Only once. Afterwards, R can find it on your hard drive as needed.", correct = TRUE),
+    answer("Never, as long as you are connected to the internet.", message = "This could be true if you are using R over a cloud service. However, if you are using R locally on your own computer, you will need to install each package that you use on your computer."),
+    allow_retry = TRUE
+  ),
+  question("What is the tidyverse?",
+    answer("A collection of packages that work well together and provide tools for common data science tasks.", correct = TRUE, message = 'You can install all of the tidyverse packages at once with `install.packages("tidyverse")`.'),
+    answer("A word processing program for R"),
+    answer("A code style that reads like poetry"),
+    answer("An alternate universe where everyone is an R programmer."),
+    allow_retry = TRUE
+  )
+)
+```
+
+## Practice here{#p}
+
+Below you will find a "practice box" mimicking an R script just like one you can create in RStudio. 
+
+#### 1. We want to make some amazing plots. Can you think of any good package for this and try to install it:
+
+
+```{r ggplot2, exercise = TRUE, message = T, warning = F, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+
+```
+
+
+```{r ggplot2-hint, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+   # 'ggplot2' is a package that makes plotting straightforward. 
+   # Unfortunately, CRAN does not have a version suitable for our R version. 
+   # Can you think of any other way to install packages:
+```
+
+```{r ggplot2-solution, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+# Solution;
+
+# You require to install this package to install from Github: install.packages("remotes")
+# We have installed 'remotes' for you now you have to type the following:
+
+remotes::install_github("tidyverse/ggplot2") 
+
+```
+
+```{r ggplot2-check}
+"Well done! You have successfully installed the ggplot2 package from Github. You now have the book in your shelf."
+```
+
+--------------------------------------------------------------------------------
+
+#### 2. We have now already installed the `ggplot2` package. However, we have tried to use the functions in the package but have had no success. Do you know what the problem could be? Please use the box below:
+
+
+```{r ggplot, exercise = TRUE, message = T, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+
+```
+
+
+```{r ggplot-hint, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+   # The package is already installed. So we have the book. Now we must look for it in the library.
+```
+
+```{r ggplot-solution, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+# Solution;
+# After installing a package into your device you need to load it in order to use its functions.
+library(ggplot2) 
+```
+
+```{r ggplot-check}
+"Well done! You have successfully loaded the ggplot2 package. You can now start using this package's functions to start creating amazing plots."
+```
+
+
+--------------------------------------------------------------------------------
+
+#### 3. Now we would like to understand what the package does. We have already searched online but we have not found any useful information. Do you know of any useful function to look into the packages documentation?
+
+
+```{r help, exercise = TRUE, message = T, warning = T, tidy=TRUE, tidy.opts=list(width.cutoff=70) }
+
+```
+
+```{r help-hint, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+   # There is a function specific to obtaining help. When this function is used Rstudio gives you important information on the package you are interested. 
+```
+
+```{r help-solution, tidy=TRUE, tidy.opts=list(width.cutoff=80)}
+# Solution;
+# An easy way to get relevant information on a package is by typing the follwing:
+help(package = "ggplot2")
+```
+
+```{r help-check}
+"Way to go! Please note that when doing this in your Rstudio a help window will pop up in your help panel where you can explore further resources."
+```
+
+--------------------------------------------------------------------------------
+
+#### 4. We are trying to install another package called `lubridate`. This package is a fantastic tool for working with dates. However, we are encountering the following message when trying to install it: "package 'lubridate' is not available (for R version 5.3.4)." How can you check the R version installed in your device?
+
+*note: This is a hypothetical problem created for the exercise. 
+
+```{r version, exercise = TRUE, message = T, tidy=TRUE, tidy.opts=list(width.cutoff=70) }
+
+```
+
+```{r version-solution, tidy=TRUE, tidy.opts=list(width.cutoff=80)}
+# Solution;
+# By typing the following you get relevant information on your device and R version
+version
+```
+
+```{r version-check}
+"Great job!."
+```
+

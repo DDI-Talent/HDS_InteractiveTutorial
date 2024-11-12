@@ -1,5 +1,5 @@
 ---
-title: "Basic R for Data Science"
+title: "Interactive Tutorial - Basics of Practical Data Science for Health and Social Care"
 output:
   learnr::tutorial:
     progressive: true

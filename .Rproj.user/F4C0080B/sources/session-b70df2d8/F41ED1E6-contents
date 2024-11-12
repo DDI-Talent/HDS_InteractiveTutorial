@@ -1,0 +1,10 @@
+# rsconnect::setAccountInfo(name='6zgc1g-arif0budiarto',
+#                           token='44B1CAF509DD30881A90C08CA9523F61',
+#                           secret='wEoIvMOfbrqnLqouCNPFuhEc7dNtSNkLObzQD2ey')
+rsconnect::setAccountInfo(name='ddi-talent',
+                          token='6F2F10FEA7FB440B3FD05719B5D8F655',
+                          secret='jHbRqbDjuqECqHFwHH/topTNRoqcN4WSY/u2Bd4N') 
+
+library(rsconnect)
+rsconnect::deployApp('./HDS_InstallR.Rmd')
+
