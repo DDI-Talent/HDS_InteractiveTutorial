@@ -1,0 +1,926 @@
+---
+title: "Interactive Tutorial - Basics of Practical Data Science for Health and Social Care"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: >
+  The purpose of this topic is to help you become familiar with how R works. We'll look at some tips to help you make the most of RStudio on your own computer, and then start exploring some of the basic functionality of R.
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+tutorial_options(exercise.timelimit = 120)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(gradethis)
+
+# Load dataset we wish to use here.
+brfss <- read.csv("Data/dataset-brfss-2013-subset1.csv")
+
+tutorial_options(exercise.checker = gradethis::grade_learnr)
+
+knitr::opts_chunk$set(error = TRUE)
+
+```
+
+## Welcome
+
+This is an interactive tutorial for Chapter 2 - Basic R for Data Science in Health and Social Care.
+
+This tutorial will help you understand the basic use of R for data exploration and creating some plot.
+
+
+
+
+## Install R
+
+### How to install R
+
+*Note: When you follow the links shown in the video below, you will be taken to the most recent version of R - version 4.1.3 ("One Push-Up") - which was updated on 10 March 2022. This video was recorded prior to this date, so the version in the video appears as version 3.6. Downloading the newest version 4.1.3 is unlikely to cause any issues for new users, but it is always good to be aware of which version you are using, because sometimes this can have repercussions for older code you might be running. The following videos have been shared by the Health Data Science course.*
+
+
+<!-- ### Do you have a Windows, Mac or other device? -->
+<!-- ```{r quiz2, echo = FALSE} -->
+<!-- question("What is your device's operating system?", -->
+<!--   answer("Windows", message = "* Go to the 'Windows' tab or click continue"), -->
+<!--   answer("Mac", message = "* Go to the 'Mac' tab or press the link below:"), -->
+<!--   answer("Other", message = "* Please refer to the 'Noteable' tab or press the link below:"), -->
+<!--   answer("I've them all.", correct = TRUE, message = "You are welcome to watch all videos!"), -->
+<!--   type = "multiple", -->
+<!--   incorrect = "This tutorial is here to help! To get set up read:" -->
+<!-- ) -->
+<!-- ``` -->
+
+
+### Installing R for Windows (03:20)
+
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_rjmwhomf&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_pcnrbsma" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Installing R for Windows"></iframe>
+
+<!-- ### Test your knowledge -->
+
+<!-- ```{r quiz3, echo=FALSE} -->
+<!-- quiz(caption = "Quiz - Install R", -->
+<!--   question("Is R free to download and use?", -->
+<!--     answer("Yes!", correct = TRUE, message = "R is free _and_ open source, which means that anyone can read, use, and copy the source code of the R language."), -->
+<!--     answer("No.") -->
+<!--   ), -->
+<!--   question("Where do you download R?", -->
+<!--     answer("www.rstudio.com/download"), -->
+<!--     answer("[cran.r-project.org](http://cloud.r-project.org)", correct = TRUE, message = "You can also download R from [cloud.r-project.org](http://cloud.r-project.org)"), -->
+<!--     answer("www.r-project.org", message = "Good try, but not exactly. www.r-project.org doesn't provide a download link, but it does provide a link to one the websites above."), -->
+<!--     answer("www.r.com"), -->
+<!--     allow_retry = TRUE -->
+<!--   ), -->
+<!--   question("How often should you update R?", -->
+<!--     answer("Everytime you use it", message = "This will be too often unless you use R very rarely!"), -->
+<!--     answer("About once a year", correct = TRUE, "A new version of R is released about once a year. Update sooner if you encounter a bug that you cannot explain."), -->
+<!--     answer("Never", message = "A new version of R is released about once a year. I'll assume that you are using the newest version of R, which will be the fastest version with the fewest unexpected behaviors." ), -->
+<!--     allow_retry = TRUE -->
+<!--   ) -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- #### If you were successful installing R and don't need to install R in a Mac OS please continue to the [Install RStudio](#is) section. Otherwise, please refer to [Noteable](#n). -->
+
+
+### Installing R for Mac (03:46)
+*Note: You may be asked for a password before you are allowed to install the new R software on your Mac.*
+
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_6ehnxok0&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_d27ik0qk" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Installing R for Mac"></iframe>
+
+### Test your knowledge - R installation
+
+```{r quiz4, echo=FALSE}
+quiz(caption = "Quiz - Install R",
+  question("Is R free to download and use?",
+    answer("Yes!", correct = TRUE, message = "R is free _and_ open source, which means that anyone can read, use, and copy the source code of the R language."),
+    answer("No.")
+  ),
+  question("Where do you download R?",
+    answer("www.rstudio.com/download"),
+    answer("[cran.r-project.org](http://cloud.r-project.org)", correct = TRUE, message = "You can also download R from [cloud.r-project.org](http://cloud.r-project.org)"),
+    answer("www.r-project.org", message = "Good try, but not exactly. www.r-project.org doesn't provide a download link, but it does provide a link to one the websites above."),
+    answer("www.r.com"),
+    allow_retry = TRUE
+  ),
+  question("How often should you update R?",
+    answer("Everytime you use it", message = "This will be too often unless you use R very rarely!"),
+    answer("About once a year", correct = TRUE, "A new version of R is released about once a year. Update sooner if you encounter a bug that you cannot explain."),
+    answer("Never", message = "A new version of R is released about once a year. I'll assume that you are using the newest version of R, which will be the fastest version with the fewest unexpected behaviors." ),
+    allow_retry = TRUE
+  )
+)
+```
+
+<!-- #### If you were successful installing R please continue to the [Install RStudio](#is) section. Otherwise, please refer to [Noteable](#n). -->
+
+<!-- ### Noteable{#n} -->
+
+<!-- *Note: This section is only necessary if you have been unable to install R and RStudio Desktop in your device.* -->
+
+<!-- We hope that you are able to install R and RStudio directly on your computer but realise that in some situations this might not be possible, for example, if you have a work computer and your access is restricted.  If this is the case, no need to worry, Noteable can provide an alternative! -->
+
+<!-- Noteable is a cloud-based alternative to RStudio developed by EDINA (Edinburgh Data and Information Access) at the University of Edinburgh. You don't need to install any software on your computer to use it. If you have been successful in installing R and RStudio, it is not necessary for you to watch the video below, but you are welcome to out of interest. Noteable also allows you to access RStudio and your workspace from different devices. The following video shows you how to access Noteable and some of the functionalities of the system. -->
+
+<!-- #### If you are comfortable using noteable and are now ready to continue please go to the [Practice here](#p) tab. -->
+
+<!-- ### Introduction to Noteable (09:56) -->
+
+<!-- <iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_348b6pjg&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_5dewmm0q" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Introduction to Noteable"></iframe> -->
+
+### Install RStudio{#is}
+
+It is possible to use R without installing RStudio but RStudio makes coding in R much easier and almost everyone now uses RStudio. In the early days of R, before RStudio was invented, people would run R code in the computer terminal, conjuring up images of that old-school 80s green font tech vibe. 
+
+All of the instructions in this course assume that you are using RStudio.
+
+### How to install RStudio
+The following tabs show you videos on how to install RStudio on your computer. Select the relevant video depending on whether your computer is running Windows and Mac OSX. You do not need to watch both.
+
+RStudio is an IDE for R. What does that mean? Well, if you think of R as a language, which it is, you can think of RStudio as a program or workspace that helps you write, edit and test your code. RStudio makes programming in R much easier and I suggest that you use it!
+
+### Installing RStudio for Windows (3:58)
+
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_vofip4cg&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_stdindvq" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Installing RStudio for Windows"></iframe>
+
+<!-- ### Test your knowledge -->
+
+<!-- ```{r quiz5, echo=FALSE} -->
+<!-- quiz(caption = "Quiz - Install RStudio", -->
+<!--   question("What is the RStudio IDE?", -->
+<!--     answer("An application that makes it easier to use R.", correct = TRUE, message = "RStudio organizes your workspace and makes it easier to write, use, debug, and save R code. I highly recommend it and will rely on the RStudio IDE in several tutorials."), -->
+<!--     answer("An application that let's you use R without writing any code.", message = "And thank goodness! Code provides a reproducible record of your work, which is essential for data science."), -->
+<!--     answer("A spreadsheet program like Microsoft Excel."), -->
+<!--     answer("A robot.", message = "R and RStudio are two separate things. R is a language, like English. Think of RStudio as a program that helps you use the language, kind of like how a word processing program helps you write in English."), -->
+<!--     allow_retry = TRUE -->
+<!--   ), -->
+<!--   question("Is the RStudio IDE free to download and use?", -->
+<!--     answer("Yes!", correct = TRUE, message = "Like R, RStudio is free and open-source. There do exist professional versions of RStudio with enhanced features, but we will not rely on those features in these tutorials."), -->
+<!--     answer("No.", message = "Like R, RStudio is free and open-source. There do exist professional versions of RStudio with enhanced features, but we will not rely on those features in these tutorials.") -->
+<!--   ), -->
+<!--   question("Where do you download RStudio?", -->
+<!--     answer("www.rstudio.com/download", correct = TRUE, message = "For these tutorials, download and install the RStudio Desktop Open Source License."), -->
+<!--     answer("[cloud.r-project.org](http://cloud.r-project.org)", message = "This is where you download R, not RStudio."), -->
+<!--     answer("www.r-project.org"), -->
+<!--     answer("[cran.rstudio.org](http://cran.rstudio.org)"), -->
+<!--     allow_retry = TRUE -->
+<!--   ), -->
+<!--   question("Do you need to install R if you already have RStudio?", -->
+<!--     answer("Yes.", correct = TRUE), -->
+<!--     answer("No.", message = "R does not come with RStudio; you need to install R separately.") -->
+<!--   ) -->
+<!-- ) -->
+<!-- ``` -->
+
+### Installing RStudio for Mac (3:34)
+
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_zql53iva&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_dxn6vclt" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Installing RStudio for Mac"></iframe>
+
+### Test your knowledge - RStudio installation
+
+```{r quiz6, echo=FALSE}
+quiz(caption = "Quiz - Install RStudio",
+  question("What is the RStudio IDE?",
+    answer("An application that makes it easier to use R.", correct = TRUE, message = "RStudio organizes your workspace and makes it easier to write, use, debug, and save R code. I highly recommend it and will rely on the RStudio IDE in several tutorials."),
+    answer("An application that let's you use R without writing any code.", message = "And thank goodness! Code provides a reproducible record of your work, which is essential for data science."),
+    answer("A spreadsheet program like Microsoft Excel."),
+    answer("A robot.", message = "R and RStudio are two separate things. R is a language, like English. Think of RStudio as a program that helps you use the language, kind of like how a word processing program helps you write in English."),
+    allow_retry = TRUE
+  ),
+  question("Is the RStudio IDE free to download and use?",
+    answer("Yes!", correct = TRUE, message = "Like R, RStudio is free and open-source. There do exist professional versions of RStudio with enhanced features, but we will not rely on those features in these tutorials."),
+    answer("No.", message = "Like R, RStudio is free and open-source. There do exist professional versions of RStudio with enhanced features, but we will not rely on those features in these tutorials.")
+  ),
+  question("Where do you download RStudio?",
+    answer("www.rstudio.com/download", correct = TRUE, message = "For these tutorials, download and install the RStudio Desktop Open Source License."),
+    answer("[cloud.r-project.org](http://cloud.r-project.org)", message = "This is where you download R, not RStudio."),
+    answer("www.r-project.org"),
+    answer("[cran.rstudio.org](http://cran.rstudio.org)"),
+    allow_retry = TRUE
+  ),
+  question("Do you need to install R if you already have RStudio?",
+    answer("Yes.", correct = TRUE),
+    answer("No.", message = "R does not come with RStudio; you need to install R separately.")
+  )
+)
+```
+
+### Install Packages
+
+### How to install R packages (10:21)
+
+<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/2010292/sp/201029200/embedIframeJs/uiconf_id/32599141/partner_id/2010292?iframeembed=true&playerId=kaltura_player&entry_id=1_2yfie5da&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;flashvars[Kaltura.addCrossoriginToIframe]=true&amp;&wid=1_l8fstg9b" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-downloads allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Installing R Packages"></iframe>
+
+### Test your knowledge - Install packages
+
+```{r names, echo = FALSE}
+quiz(caption = "Quiz - Working with Packages",
+  question("What command do you use to install packages?",
+    answer("`library()`", message = "We will see what `library()` does later."),
+    answer("`install.packages()`", correct = TRUE),
+    answer("`install_packages()`"),
+    answer("There is no command. You must visit [cran.r-project.org](http://cran.r-project.org) and download packages manually.", message = "R makes it easy to download packages. You connect to the internet and then run one of the commands above."),
+    allow_retry = TRUE
+  ),
+  question("How often do you need to install a package on your computer?",
+    answer("Every time you restart R"),
+    answer("Every time you restart your computer"),
+    answer("Only once. Afterwards, R can find it on your hard drive as needed.", correct = TRUE),
+    answer("Never, as long as you are connected to the internet.", message = "This could be true if you are using R over a cloud service. However, if you are using R locally on your own computer, you will need to install each package that you use on your computer."),
+    allow_retry = TRUE
+  ),
+  question("What is the tidyverse?",
+    answer("A collection of packages that work well together and provide tools for common data science tasks.", correct = TRUE, message = 'You can install all of the tidyverse packages at once with `install.packages("tidyverse")`.'),
+    answer("A word processing program for R"),
+    answer("A code style that reads like poetry"),
+    answer("An alternate universe where everyone is an R programmer."),
+    allow_retry = TRUE
+  )
+)
+```
+
+### Practice here{#p}
+
+Below you will find a "practice box" mimicking an R script just like one you can create in RStudio. 
+
+#### 1. We want to make some amazing plots. Can you think of any good package for this and try to install it:
+
+
+```{r ggplot2, exercise = TRUE, message = T, warning = F, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+
+```
+
+
+```{r ggplot2-hint, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+   # 'ggplot2' is a package that makes plotting straightforward. 
+   # Unfortunately, CRAN does not have a version suitable for our R version. 
+   # Can you think of any other way to install packages:
+```
+
+```{r ggplot2-solution, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+# Solution;
+
+# You require to install this package to install from Github: install.packages("remotes")
+# We have installed 'remotes' for you now you have to type the following:
+
+# remotes::install_github("tidyverse/ggplot2") 
+install.packages('ggplot2')
+
+```
+
+```{r ggplot2-check}
+
+grade_this_code()
+# "Well done! You have successfully installed the ggplot2 package from Github. You now have the book in your shelf."
+```
+
+--------------------------------------------------------------------------------
+
+#### 2. We have now already installed the `ggplot2` package. However, we have tried to use the functions in the package but have had no success. Do you know what the problem could be? Please use the box below:
+
+
+```{r ggplot, exercise = TRUE, message = T, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+
+```
+
+
+```{r ggplot-hint, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+   # The package is already installed. So we have the book. Now we must look for it in the library.
+```
+
+```{r ggplot-solution, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+# Solution;
+# After installing a package into your device you need to load it in order to use its functions.
+library(ggplot2) 
+```
+
+```{r ggplot-check}
+grade_this_code()
+
+# "Well done! You have successfully loaded the ggplot2 package. You can now start using this package's functions to start creating amazing plots."
+```
+
+
+--------------------------------------------------------------------------------
+
+#### 3. Now we would like to understand what the package does. We have already searched online but we have not found any useful information. Do you know of any useful function to look into the packages documentation?
+
+
+```{r help, exercise = TRUE, message = T, warning = T, tidy=TRUE, tidy.opts=list(width.cutoff=70) }
+
+```
+
+```{r help-hint, tidy=TRUE, tidy.opts=list(width.cutoff=70)}
+   # There is a function specific to obtaining help. When this function is used Rstudio gives you important information on the package you are interested. 
+```
+
+```{r help-solution, tidy=TRUE, tidy.opts=list(width.cutoff=80)}
+# Solution;
+# An easy way to get relevant information on a package is by typing the follwing:
+help(package = "ggplot2")
+```
+
+```{r help-check}
+grade_this_code()
+# "Way to go! Please note that when doing this in your Rstudio a help window will pop up in your help panel where you can explore further resources."
+```
+
+--------------------------------------------------------------------------------
+
+#### 4. We are trying to install another package called `lubridate`. This package is a fantastic tool for working with dates. However, we are encountering the following message when trying to install it: "package 'lubridate' is not available (for R version 5.3.4)." How can you check the R version installed in your device?
+
+*note: This is a hypothetical problem created for the exercise. 
+
+```{r version, exercise = TRUE, message = T, tidy=TRUE, tidy.opts=list(width.cutoff=70) }
+
+```
+
+```{r version-solution, tidy=TRUE, tidy.opts=list(width.cutoff=80)}
+# Solution;
+# By typing the following you get relevant information on your device and R version
+version
+```
+
+```{r version-check}
+grade_this_code()
+# "Great job!."
+```
+
+
+
+
+## Basic use of R
+
+
+### R Syntax
+To output text in R, use single or double quotes:
+
+```{r text_syntax, exercise = TRUE, exercise.eval = FALSE}
+#run the code below
+"My first R code"
+```
+
+To output numbers, just type the number (without quotes):
+```{r numerical_syntax, exercise = TRUE, exercise.eval = FALSE}
+#run the code below
+123
+```
+
+R is like a calculator. You can do some mathematical calculation like this:
+
+```{r calculation, exercise = TRUE, exercise.eval = FALSE}
+#run the code below
+8 + 9
+```
+
+That is how you write code in R.
+
+### Print
+In R, you can output a code without using a print function (as you have done above). However, R also have a print() function available if you want to use it. This code below will have the same output as before.
+```{r print, exercise = TRUE, exercise.eval = FALSE}
+#run the code below
+print("My first R code")
+```
+
+This print function will be very useful when you want print the output of a function. We will dwell further into this topic in the later section.
+
+### Asignment operators
+We can save our values into an object using the = sign or alternatively, you could use these <- symbols. They are both called assignment operators.
+For a practice, we will save all the values in the previous examples into objects.
+```{r object,  exercise = TRUE, exercise.eval = FALSE}
+#run the code below
+text_object <- "My first R code"
+numerical_object <- 123
+```
+
+You will not see any output from the code above. To print the output, you can simply call (type) the object name after assigning the value into an object.
+
+```{r printObject,  exercise = TRUE, exercise.eval = FALSE}
+#run the code below
+text_object <- "My first R code"
+numerical_object <- 123
+
+text_object
+numerical_object
+```
+
+
+
+
+### Variable naming in R
+
+A variable can have a short name (like x and y) or a more descriptive name (age, carname, total_volume). Rules for R variables are:
+
+* A variable name must start with a letter and can be a combination of letters, digits, period(.)
+and underscore(_). 
+* If it starts with period(.), it cannot be followed by a digit.
+* A variable name cannot start with a number or underscore (_)
+* Variable names are case-sensitive (age, Age and AGE are three different variables)
+* Reserved words cannot be used as variables (TRUE, FALSE, NULL, if...)
+
+
+### Arithmetic operators
+
+As you have tried before, you can use R as a calculator to perform some basic arithmetic operations. The table below shows you all the available arithmetic operators in R:
+
+| Operator | Name                              | Example |
+|----------|-----------------------------------|---------|
+| +        | Addition                          | x + y   |
+| -        | Subtraction                       | x - y   |
+| *        | Multiplication                    | x * y   |
+| /        | Division                          | x / y   |
+| ^        | Exponent                          | x ^ y   |
+| %%       | Modulus (Remainder from division) | x %% y  |
+| %/%      | Integer Division                  | x%/%y   |
+
+Given the two objects in the code chunk below, you can try to perform some arithmetic operations. For example, you can calculate the average of both values. Please write your code and save into an object 'average_value'. And do not forget to call the object to see the output.
+```{r arithmetic, exercise = TRUE, exercise.eval = FALSE, }
+x <- 45
+y <- 5
+
+#insert your code below:
+
+
+```
+```{r arithmetic-hint}
+average_value = (x+y)/2
+average_value
+```
+```{r arithmetic-solution}
+x <- 45
+y <- 5
+#insert your code below:
+average_value <- (x+y)/2
+average_value
+
+```
+```{r arithmetic-check}
+grade_this_code()
+
+```
+
+### Relational/Comparison operators
+Comparison operators are used to compare two values. You will use them oftenly in 'if' statement (more detailed in later sections).
+
+| Operator | Name                     | Example |
+|----------|--------------------------|---------|
+| ==       | Equal                    | x == y  |
+| !=       | Not equal                | x != y  |
+| >        | Greater than             | x > y   |
+| <        | Less than                | x < y   |
+| >=       | Greater than or equal to | x >= y  |
+| <=       | Less than or equal to    | x <= y  |
+
+Let's see what the output from logical operators looklike:
+
+```{r relational, exercise = TRUE, exercise.eval = FALSE, }
+x = 1
+y = 6
+z = 'ABC'
+
+x == y
+
+```
+
+Can you use relational operator to check if x less than y.
+
+```{r relationalExercise, exercise = TRUE}
+x = 1
+y = 6
+
+#insert your code below:
+
+```
+
+```{r relationalExercise-hint }
+#use '<' operator
+
+```
+
+```{r relationalExercise-solution}
+x = 1
+y = 6
+
+#insert your code below:
+x<y
+
+```
+
+```{r relationalExercise-check}
+grade_this_code()
+
+```
+
+### Logical operators
+
+| Operator | Description                                                                       |
+|----------|-----------------------------------------------------------------------------------|
+| &        | Element-wise Logical AND operator. It returns TRUE if both elements are TRUE      |
+| &&       | Logical AND operator - Returns TRUE if both statements are TRUE                   |
+| \|       | Elementwise- Logical OR operator. It returns TRUE if one of the statement is TRUE |
+| \|\|     | Logical OR operator. It returns TRUE if one of the statement is TRUE.             |
+| !        | Logical NOT - returns FALSE if statement is TRUE                                  |
+
+
+
+### Data types in R
+
+Basic data types in R can be divided into the following types:
+
+* numeric - (10.5, 55, 787)
+* integer - (1L, 55L, 100L, where the letter "L" declares this as an integer)
+* complex - (9 + 3i, where "i" is the imaginary part)
+* character (a.k.a. string) - ("k", "Welcome", "FALSE", "11.5")
+* logical (a.k.a. boolean) - (TRUE or FALSE)
+
+We can use the class() function to check the data type of a variable:
+
+```{r data-types, exercise = TRUE, exercise.eval = FALSE, }
+#run the codes below:
+
+# numeric
+x <- 10.5
+class(x)
+
+# integer
+x <- 1000L
+class(x)
+
+# complex
+x <- 9i + 3
+class(x)
+
+# character/string
+x <- "Welcome to R"
+class(x)
+
+# logical/boolean
+x <- TRUE
+class(x) 
+```
+
+## Importing and exploring data
+As you have already learned some basic concepts in R, you will try to load data and explore it in R.
+
+### Step 1: Load library
+From now on we will mostly use Tidyverse package. The package has been installed, so you just need to load the library.
+
+```{r loadLibrary, exercise = TRUE}
+#You need to run this code in order to progress to the next steps.
+library(tidyverse)
+```
+
+
+### Step 2: Load data
+We will use data from dataset-brfss-2013-subset1.csv. The Behavioral Risk Factor Surveillance System (BRFSS) is the nation’s premier system of health-related telephone surveys that collect state data about U.S. residents regarding their health-related risk behaviors, chronic health conditions, and use of preventive services.
+
+We can use read_csv() from Tidyverse to load the data to R.
+```{r loadData, exercise = TRUE, exercise.eval = FALSE}
+brfss <- read_csv("Data/dataset-brfss-2013-subset1.csv")
+
+```
+
+We can check if the data is loaded in R by using glimpse() to get the overview of our data.
+
+```{r glimpseData, exercise = TRUE}
+glimpse(brfss)
+
+```
+
+### Explore data
+Now, we can further explore our data. Let's use filter() function to select a subset of our data based on a specific condition. We want to select only samples who are 10 years old or older.
+
+```{r filterData, exercise = TRUE, exercise.eval = FALSE}
+brfss %>% filter(age >= 10) 
+
+```
+
+We can also select only specific columns to be included when filtering the data. For example, we want to only include age, and active variable after filtering the data.
+```{r filterSelectData, exercise = TRUE, exercise.eval = FALSE}
+brfss %>% 
+        filter(age >= 10) %>% 
+        select(age, active)
+```
+
+Can you use filter() and select() to select only samples with active time more than 10 and include only activetimes, age, and genhealth variables in your output.
+
+```{r exerciseFilter, exercise = TRUE}
+
+```
+
+
+```{r exerciseFilter-hint}
+#you can consider this template
+# [data] %>% 
+#         [what_you_want_to_do_first - filter()] %>%
+#         [what_you_want_to_do_next - select()]
+
+
+```
+
+```{r exerciseFilter-solution}
+brfss %>% 
+        filter(activetimes >= 10) %>% 
+        select(activetimes, age, genhealth)
+```
+
+```{r exerciseFilter-check}
+grade_this_code()
+
+```
+
+## Plotting Data{#p}
+
+Below you will find a "practice box" mimicking an R script just like one you can create in RStudio.
+
+### Step 1: Install and load required libraries
+
+#### Let's install and load the `ggplot2` package.
+
+```{r load-package, exercise = TRUE}
+# We have installed the package for you, now please load the library.
+# Hint: Use library() to load the package.
+```
+
+```{r load-package-hint}
+# Use the install.packages() function first
+```
+
+```{r load-package-solution}
+# Solution;
+
+# The load the package to utilise.
+library(ggplot2)
+```
+
+```{r load-package-check}
+grade_this({
+  if ("ggplot2" %in% .packages()) {
+    pass("Great job! The ggplot2 package is loaded and ready to use.")
+  } else {
+    fail("It looks like ggplot2 isn’t loaded. Make sure you load it by running `library(ggplot2)`.")
+  }
+
+
+})
+```
+
+---
+
+### Step 2: Load the BRFSS Dataset
+
+#### Let's load the BRFSS dataset and assign it to a variable called `brfss`.
+#### Can you show the five first rows of the dataset.
+
+```{r load-data, exercise = TRUE}
+# We have loaded the data set and assigned it to a variable called `brfss`.
+# Hint: use a function to have a look of the dataset.
+
+```
+
+```{r load-data-hint}
+# The dataset is in CSV format. We used `read.csv("path/to/file.csv")` to load it.
+# The dataset is now in your environment with the name `brfss`.
+# Use the `head()` function to view the five first rows.
+
+```
+
+```{r load-data-solution}
+# Solution;
+head(brfss)
+
+```
+
+```{r load-data-check}
+library(gradethis)
+
+grade_this({
+  # Convert .user_code to a character string for inspection
+  code_as_text <- as.character(rlang::expr_text(.user_code))
+  
+  # Define a pattern to look for the correct structure of the code
+  correct_pattern <- "head(brfss)"
+  
+  # Check if the student's code matches the expected pattern
+  if (grepl(correct_pattern, code_as_text, fixed = TRUE)) {
+    pass("Well done! You’ve successfully used `head(brfss)` to view the top rows of the dataset.")
+  } else {
+    fail("Try again. Ensure you use `head(brfss)` to view the first few rows of the dataset.")
+  }
+})
+```
+
+---
+
+### Step 3: Bar Plot of Education Levels
+
+#### Create a bar plot to show the distribution of education levels in the BRFSS dataset.
+
+```{r education-barplot, exercise = TRUE}
+# Now that you have loaded the dataset and named it brfss, use ggplot2 to create a bar plot showing the distribution of the 'education' column.
+
+
+```
+
+```{r education-barplot-hint}
+# Hint: ggplot('your data here', aes(x = factor('education variable here'))) + geom_bar()
+
+# Use `geom_bar()` to create a bar plot and set the x aesthetic to `factor(education)` to ensure it is treated as categorical.
+```
+
+```{r education-barplot-solution}
+# Solution
+ggplot(brfss, aes(x = factor(education))) + 
+  geom_bar() 
+```
+
+```{r education-barplot-check}
+grade_this({
+  # Check if .result is a ggplot object
+  if (inherits(.result, "ggplot") &&
+      # Check if the data used in the plot is `brfss`
+      identical(.result$data, brfss) &&
+      # Check if x and y mappings are correct
+      rlang::quo_text(.result$mapping$x) == "factor(education)" &&
+      # Check if there is a geom_boxplot layer
+      any(sapply(.result$layers, function(layer) inherits(layer$geom, "GeomBar")))
+  ) {
+    pass("Well done! You've correctly plotted the bar plot for education level.")
+  } else {
+    fail("Try again. Ensure you use `ggplot(brfss, aes(x = factor(education))) + 
+  geom_bar()`.")
+  }
+})
+```
+---
+
+### Step 4: Histogram of BMI
+
+#### Create a histogram to display the distribution of BMI among respondents.
+
+```{r bmi-histogram, exercise = TRUE}
+# Use ggplot2 to create a histogram of the 'bmi' column.
+
+
+```
+
+```{r bmi-histogram-hint}
+# Hint: ggplot('your data here', aes(x = 'bmi variable here')) + geom_histogram(bins = 15)
+
+# Use `geom_histogram(bins = 15)` to specify the number of bins in the histogram.
+```
+
+```{r bmi-histogram-solution}
+# Solution
+ggplot(brfss, aes(x = bmi)) + 
+  geom_histogram(bins = 15) 
+```
+
+```{r bmi-histogram-check}
+grade_this({
+  # Check if .result is a ggplot object
+  if (inherits(.result, "ggplot") &&
+      # Check if the data used in the plot is `brfss`
+      identical(.result$data, brfss) &&
+      # Check if x and y mappings are correct
+      rlang::quo_text(.result$mapping$x) == "bmi" &&
+      # Check if there is a geom_boxplot layer
+      any(sapply(.result$layers, function(layer) inherits(layer$geom, "GeomBar")))
+  ) {
+    pass("Well done! You've correctly plotted a histogram for BMI.")
+  } else {
+    fail("Try again. Ensure you use `ggplot(brfss, aes(x = bmi)) + 
+  geom_histogram(bins = 15)`.")
+  }
+})
+```
+---
+
+### Step 5: Bar Plot of Fruit and Vegetable Consumption
+
+#### Create a bar plot to show the number of respondents consuming fruits and vegetables.
+
+```{r diet-barplot, exercise = TRUE}
+# Use ggplot2 to create a bar plot for fruit and vegetable consumption.
+
+```
+
+```{r diet-barplot-hint}
+# Hint: ggplot('your data here', aes(x = factor('fruits variable here'))) + geom_bar()
+
+# Set the x aesthetic to `factor(fruits)` for fruit consumption and use `geom_bar()`.
+```
+
+```{r diet-barplot-solution}
+# Solution
+ggplot(brfss, aes(x = factor(fruits))) + 
+  geom_bar()
+```
+
+
+```{r diet-barplot-check}
+grade_this({
+  # Check if .result is a ggplot object
+  if (inherits(.result, "ggplot") &&
+      # Check if the data used in the plot is `brfss`
+      identical(.result$data, brfss) &&
+      # Check if x and y mappings are correct
+      rlang::quo_text(.result$mapping$x) == "factor(fruits)" &&
+      # Check if there is a geom_boxplot layer
+      any(sapply(.result$layers, function(layer) inherits(layer$geom, "GeomBar")))
+  ) {
+    pass("Well done! You've correctly plotted the barplot for fruit and vegetable consumption.")
+  } else {
+    fail("Try again. Ensure you use `ggplot(brfss, aes(x = factor(fruits))) + 
+  geom_bar()`.")
+  }
+})
+```
+---
+
+### Step 6: Scatter Plot of Physical Activity and BMI
+
+#### Create a scatter plot to explore the relationship between physical activity and BMI.
+
+```{r activity-bmi-scatter, exercise = TRUE}
+# Use ggplot2 to create a scatter plot with 'activetimes' on the x-axis and 'bmi' on the y-axis.
+
+```
+
+```{r activity-bmi-scatter-hint}
+# Hint: ggplot('your data here', aes(x = 'activetimes variable here', y = 'bmi variable here')) + geom_point()
+
+# Use `geom_point()` to create a scatter plot, setting 'activetimes' on the x-axis and 'bmi' on the y-axis.
+```
+
+```{r activity-bmi-scatter-solution}
+# Solution
+ggplot(brfss, aes(x = activetimes, y = bmi)) + 
+  geom_point() 
+```
+
+```{r activity-bmi-scatter-check}
+grade_this({
+  # Check if .result is a ggplot object
+  if (inherits(.result, "ggplot") &&
+      # Check if the data used in the plot is `brfss`
+      identical(.result$data, brfss) &&
+      # Check if x and y mappings are correct
+      rlang::quo_text(.result$mapping$x) == "activetimes" &&
+      rlang::quo_text(.result$mapping$y) == "bmi" &&
+      # Check if there is a geom_boxplot layer
+      any(sapply(.result$layers, function(layer) inherits(layer$geom, "GeomPoint")))
+  ) {
+    pass("Well done! You've correctly plotted the scatterplot of activetimes and BMI.")
+  } else {
+    fail("Try again. Ensure you use `ggplot(brfss, aes(x = activetimes, y = bmi)) + 
+  geom_point()`.")
+  }
+})
+```
+---
+
+### Step 7: Box Plot of BMI by Education Level
+
+#### Create a box plot to compare BMI across different education levels.
+
+```{r bmi-education-boxplot, exercise = TRUE}
+# Use ggplot2 to create a box plot of 'bmi' by 'education' levels.
+
+```
+
+```{r bmi-education-boxplot-hint}
+# Hint: ggplot('your data here', aes(x = factor('education variable here'), y = 'bmi variable here')) + geom_boxplot() 
+
+# Use `geom_boxplot()` to show the spread of 'bmi' across different 'education' levels.
+```
+
+```{r bmi-education-boxplot-solution}
+# Solution
+ggplot(brfss, aes(x = factor(education), y = bmi)) + 
+  geom_boxplot() 
+```
+
+```{r bmi-education-boxplot-check}
+grade_this({
+  # Check if .result is a ggplot object
+  if (inherits(.result, "ggplot") &&
+      # Check if the data used in the plot is `brfss`
+      identical(.result$data, brfss) &&
+      # Check if x and y mappings are correct
+      rlang::quo_text(.result$mapping$x) == "factor(education)" &&
+      rlang::quo_text(.result$mapping$y) == "bmi" &&
+      # Check if there is a geom_boxplot layer
+      any(sapply(.result$layers, function(layer) inherits(layer$geom, "GeomBoxplot")))
+  ) {
+    pass("Well done! You've correctly plotted the boxplot of BMI by education level.")
+  } else {
+    fail("Try again. Ensure you use `ggplot(brfss, aes(x = factor(education), y = bmi)) + geom_boxplot()`.")
+  }
+})
+```
+
+

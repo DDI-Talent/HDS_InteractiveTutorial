@@ -1,0 +1,10 @@
+name: r_interactive_tutorial
+title: R_interactive_tutorial
+username: ddi-talent
+account: ddi-talent
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13314189
+bundleId: 9352240
+url: https://ddi-talent.shinyapps.io/r_interactive_tutorial/
+version: 1
