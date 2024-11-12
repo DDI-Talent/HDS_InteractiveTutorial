@@ -1,27 +1,28 @@
 name: Deploy Shiny App on PR to Development or Main Branch
 
 on:
-  pull_request:
-    types: [closed]  # Trigger when PR is closed
+  push
     branches:
-      - main  
-  workflow_dispatch:  # Optional manual trigger
+      - main
 
 jobs:
-  
   deploy-main:
-    if: github.event.pull_request.merged == true && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-   
-    - name: Deploy to shinyapps.io (Production)
-      env:
-        SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN_DDI_TALENT }}
-        SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET_DDI_TALENT }}
-      run: |
-        rsconnect deploy shiny ./ \
-        --account ddi-talent \
-        --server shinyapps.io \
-        --token $SHINYAPPS_TOKEN \
-        --secret $SHINYAPPS_SECRET \
-        -a 13183414 --title R_interactive_tutorial
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install R and required packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install r-base
+          Rscript -e "install.packages('rsconnect')"
+
+      - name: Deploy application
+        env:
+          SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN_DDI_TALENT }}
+          SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET_DDI_TALENT }}
+        run: |
+          Rscript -e rsconnect::setAccountInfo(name='ddi-talent', token='SHINYAPPS_TOKEN', secret='SHINYAPPS_SECRET')
+          Rscript -e "rsconnect::deployApp(appFiles='HDS_InteractiveTutorial/RBasic.Rmd', appId=13183414, appTitle='R_interactive_tutorial)"
+
