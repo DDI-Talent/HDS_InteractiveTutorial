@@ -20,13 +20,17 @@ jobs:
         run: |
           sudo apt-get install libcurl4-openssl-dev
           sudo Rscript -e "install.packages('rsconnect')"
-
+          sudo Rscript -e "install.packages('learnr')"
+          sudo Rscript -e "install.packages('ggplot2')"
+          sudo Rscript -e "install.packages(c('shiny', 'rmarkdown')
       - name: Deploy application
         env:
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN_DDI_TALENT }}
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET_DDI_TALENT }}
         run: |
           Rscript -e "library(rsconnect); \
+                      library(learnr); \
+                      library(ggplot2)
                       rsconnect::setAccountInfo(name='ddi-talent', \
                                                 token=Sys.getenv('SHINYAPPS_TOKEN'), \
                                                 secret=Sys.getenv('SHINYAPPS_SECRET')); \
