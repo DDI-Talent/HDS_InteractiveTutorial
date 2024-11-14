@@ -1,12 +1,16 @@
 name: Deploy Shiny App on PR to Development or Main Branch
 
 on:
-  push
+  pull_request:
+    types: [closed]  # Trigger when PR is closed
     branches:
-      - main
+      - develop
+      - main  
+  workflow_dispatch:  # Optional manual trigger
 
 jobs:
   deploy-main:
+    if: github.event.pull_request.merged == true && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
