@@ -16,16 +16,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install R and required packages
+      - name: Install and load required packages
         run: |
           sudo Rscript -e "install.packages('rsconnect')"
+	  Rscript -e "library(rsconnect)"
 
       - name: Deploy application
         env:
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN_DDI_TALENT }}
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET_DDI_TALENT }}
         run: |
-          Rscript -e "library(rsconnect)"
 	  Rscript -e "rsconnect::setAccountInfo(name='ddi-talent', token='SHINYAPPS_TOKEN', secret='SHINYAPPS_SECRET')"
           Rscript -e "rsconnect::deployApp(appFiles='HDS_InteractiveTutorial/RBasic.Rmd', appId=13183414, appTitle='R_interactive_tutorial')"
 
