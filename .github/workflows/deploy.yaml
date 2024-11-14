@@ -25,6 +25,7 @@ jobs:
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN_DDI_TALENT }}
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET_DDI_TALENT }}
         run: |
-          Rscript -e "rsconnect::setAccountInfo(name='ddi-talent', token='SHINYAPPS_TOKEN', secret='SHINYAPPS_SECRET')"
+          Rscript -e "library(rsconnect)"
+	  Rscript -e "rsconnect::setAccountInfo(name='ddi-talent', token='SHINYAPPS_TOKEN', secret='SHINYAPPS_SECRET')"
           Rscript -e "rsconnect::deployApp(appFiles='HDS_InteractiveTutorial/RBasic.Rmd', appId=13183414, appTitle='R_interactive_tutorial')"
 
