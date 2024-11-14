@@ -22,7 +22,7 @@ jobs:
           sudo Rscript -e "install.packages('rsconnect')"
           sudo Rscript -e "install.packages('learnr')"
           sudo Rscript -e "install.packages('ggplot2')"
-          sudo Rscript -e "install.packages(c('shiny', 'rmarkdown')
+          sudo Rscript -e "install.packages(c('shiny', 'rmarkdown'))"
       - name: Deploy application
         env:
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN_DDI_TALENT }}
