@@ -18,7 +18,8 @@ jobs:
 
       - name: Install R and required packages
         run: |
-          sudo Rscript -e "install.packages('rsconnect', repos='https://cloud.r-project.org')"
+          sudo Rscript -e "install.packages('curl')"
+          sudo Rscript -e "install.packages('rsconnect')"
 
       - name: Deploy application
         env:
