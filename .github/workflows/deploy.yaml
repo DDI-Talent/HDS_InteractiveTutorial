@@ -36,4 +36,4 @@ jobs:
                                                 secret=Sys.getenv('SHINYAPPS_SECRET')); \
                       rsconnect::deployApp(appFiles='HDS_InteractiveTutorial/RBasic.Rmd', \
                                            appId=13183414, \
-                                           appTitle='R_interactive_tutorial')"
+                                           appTitle='RBasic.Rmd')"
