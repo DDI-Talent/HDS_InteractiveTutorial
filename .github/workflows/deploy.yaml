@@ -18,7 +18,7 @@ jobs:
 
       - name: Install R and required packages
         run: |
-          Rscript -e "install.packages('rsconnect')"
+          sudo Rscript -e "install.packages('rsconnect')"
 
       - name: Deploy application
         env:
