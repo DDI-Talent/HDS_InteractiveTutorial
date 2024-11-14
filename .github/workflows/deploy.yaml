@@ -18,8 +18,6 @@ jobs:
 
       - name: Install R and required packages
         run: |
-          sudo apt-get update
-          sudo apt-get install r-base
           Rscript -e "install.packages('rsconnect')"
 
       - name: Deploy application
