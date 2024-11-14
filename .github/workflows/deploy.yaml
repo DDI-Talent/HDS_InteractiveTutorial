@@ -30,7 +30,7 @@ jobs:
         run: |
           Rscript -e "library(rsconnect); \
                       library(learnr); \
-                      library(ggplot2)
+                      library(ggplot2) ; \
                       rsconnect::setAccountInfo(name='ddi-talent', \
                                                 token=Sys.getenv('SHINYAPPS_TOKEN'), \
                                                 secret=Sys.getenv('SHINYAPPS_SECRET')); \
