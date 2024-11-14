@@ -19,6 +19,7 @@ jobs:
       - name: Install R and required packages
         run: |
           sudo apt-get install libcurl4-openssl-dev
+          sudo Rscript -e "install.packages(c('ragg', 'systemfonts', 'textshaping'))"
           sudo Rscript -e "install.packages(c('rsconnect', 'learnr', 'tidyverse', 'shiny', 'rmarkdown', 'remotes', 'devtools'))"
           sudo Rscript -e "devtools::install_github('rstudio/gradethis')"
       - name: Deploy application
