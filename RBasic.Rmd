@@ -5,7 +5,7 @@ output:
     progressive: true
     allow_skip: true
 runtime: shiny_prerendered
-version: 1.0.0
+version: 1.0.1
 description: >
   The purpose of this topic is to help you become familiar with how R works. We'll look at some tips to help you make the most of RStudio on your own computer, and then start exploring some of the basic functionality of R.
 ---
