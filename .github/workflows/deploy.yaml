@@ -28,8 +28,8 @@ jobs:
         run: |
           Rscript -e "library(rsconnect); \
                       rsconnect::setAccountInfo(name='ddi-talent', \
-                                                token=SHINYAPPS_TOKEN, \
-                                                secret=SHINYAPPS_SECRET); \
+                                                token=Sys.getenv('SHINYAPPS_TOKEN'), \
+                                                secret=Sys.getenv('SHINYAPPS_SECRET')); \
                       rsconnect::deployApp(appFiles='HDS_InteractiveTutorial/RBasic.Rmd', \
                                            appId=13183414, \
                                            appTitle='R_interactive_tutorial')"
