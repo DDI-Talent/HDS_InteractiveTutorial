@@ -18,14 +18,16 @@ jobs:
 
       - name: Install R and required packages
         run: |
-          Rscript -e "install.packages('rsconnect', repos='https://cloud.r-project.org')"
+          Rscript -e "dir.create('~/R', showWarnings = FALSE)"
+          Rscript -e "install.packages('rsconnect', repos='https://cloud.r-project.org', lib='~/R')"
+          Rscript -e ".libPaths('~/R')"
 
       - name: Deploy application
         env:
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN_DDI_TALENT }}
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET_DDI_TALENT }}
         run: |
-          Rscript -e "library(rsconnect); \
+          Rscript -e "library(rsconnect, lib.loc='~/R'); \
                       rsconnect::setAccountInfo(name='ddi-talent', \
                                                 token=Sys.getenv('SHINYAPPS_TOKEN'), \
                                                 secret=Sys.getenv('SHINYAPPS_SECRET')); \
