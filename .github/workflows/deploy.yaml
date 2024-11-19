@@ -16,11 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Install system dependencies required by R and renv
+      # Install system dependencies for R packages
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev pandoc
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev pandoc zlib1g-dev
 
       # Install R, renv, and restore environment from renv.lock
       - name: Set up R and renv
