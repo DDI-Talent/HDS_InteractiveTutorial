@@ -52,6 +52,5 @@ jobs:
                       rsconnect::setAccountInfo(name='ddi-talent', \
                                                 token=Sys.getenv('SHINYAPPS_TOKEN'), \
                                                 secret=Sys.getenv('SHINYAPPS_SECRET')); \
-                      rsconnect::deployApp(appFiles='RBasic.Rmd', \
-                                           appId=13183414, \
+                      rsconnect::deployApp(appId=13183414, \
                                            appTitle='R_interactive_tutorial')"
