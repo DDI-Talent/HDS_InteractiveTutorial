@@ -35,15 +35,11 @@ jobs:
           r-version: '4.3.3'
 
 
-      # Install R, renv, and restore environment from renv.lock
-      - name: Set up R and renv
+      # Install and restore with renv, using a custom library path
+      - name: Install and Restore with renv
         run: |
-          # Install R if necessary (this step can be adjusted if a specific R version is required)
-          sudo apt-get install -y r-base
-          # Install renv if not available
-          sudo Rscript -e "install.packages('renv')"
-          # Restore the environment using the renv.lock file
-          sudo Rscript -e "renv::restore()"
+          Rscript -e "Sys.setenv(R_LIBS_USER='~/.R/renv_library'); install.packages('renv')"
+          Rscript -e "Sys.setenv(R_LIBS_USER='~/.R/renv_library'); renv::restore()"
           
       - name: Deploy application
         env:
