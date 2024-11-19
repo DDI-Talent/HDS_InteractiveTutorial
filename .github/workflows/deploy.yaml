@@ -20,7 +20,7 @@ jobs:
         run: |
           sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
           sudo Rscript -e "install.packages(c('textshaping', 'systemfonts', 'ragg'))"
-          sudo Rscript -e "install.packages(c('remotes', 'devtools', 'rsconnect', 'pkgdown'))""
+          sudo Rscript -e "install.packages(c('remotes', 'devtools', 'rsconnect', 'pkgdown'))"
           sudo Rscript -e "install.packages(c('learnr', 'tidyverse', 'shiny', 'rmarkdown'))"
           sudo Rscript -e "devtools::install_github('rstudio/gradethis')"
       - name: Deploy application
