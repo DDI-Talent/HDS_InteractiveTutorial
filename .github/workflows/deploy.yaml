@@ -16,24 +16,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install R and required packages
+      # Install system dependencies required by R and renv
+      - name: Install system dependencies
         run: |
-          sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
-          sudo Rscript -e "install.packages(c('textshaping', 'systemfonts', 'ragg'))"
-          sudo Rscript -e "install.packages(c('remotes', 'devtools', 'rsconnect', 'pkgdown'))"
-          sudo Rscript -e "install.packages(c('learnr', 'tidyverse', 'shiny', 'rmarkdown'))"
-          sudo Rscript -e "devtools::install_github('rstudio/gradethis')"
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev pandoc
+
+      # Install R, renv, and restore environment from renv.lock
+      - name: Set up R and renv
+        run: |
+          # Install R if necessary (this step can be adjusted if a specific R version is required)
+          sudo apt-get install -y r-base
+          # Install renv if not available
+          sudo Rscript -e "install.packages('renv')"
+          # Restore the environment using the renv.lock file
+          sudo Rscript -e "renv::restore()"
+          
       - name: Deploy application
         env:
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN_DDI_TALENT }}
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET_DDI_TALENT }}
         run: |
           Rscript -e "library(rsconnect); \
-                      library(learnr); \
-                      library(ggplot2); \
                       rsconnect::setAccountInfo(name='ddi-talent', \
                                                 token=Sys.getenv('SHINYAPPS_TOKEN'), \
                                                 secret=Sys.getenv('SHINYAPPS_SECRET')); \
                       rsconnect::deployApp(appFiles='RBasic.Rmd', \
                                            appId=13183414, \
+                                           appTitle='R_interactive_tutorial')"
                                            appTitle='R_interactive_tutorial')"
