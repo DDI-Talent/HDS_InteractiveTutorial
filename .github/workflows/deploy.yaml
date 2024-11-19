@@ -47,10 +47,11 @@ jobs:
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET_DDI_TALENT }}
         run: |
           Rscript -e "library(rsconnect); \
+                      library(learnr); \
+                      library(ggplot2); \
                       rsconnect::setAccountInfo(name='ddi-talent', \
                                                 token=Sys.getenv('SHINYAPPS_TOKEN'), \
                                                 secret=Sys.getenv('SHINYAPPS_SECRET')); \
                       rsconnect::deployApp(appFiles='RBasic.Rmd', \
                                            appId=13183414, \
-                                           appTitle='R_interactive_tutorial')"
                                            appTitle='R_interactive_tutorial')"
