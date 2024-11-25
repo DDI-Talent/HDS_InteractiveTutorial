@@ -2,3 +2,4 @@ Archive
 .github
 .Rprofile
 R-Basics.html
+renv.lock
