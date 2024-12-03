@@ -19,7 +19,7 @@ library(dplyr)
 library(gradethis)
 
 # Load dataset we wish to use here.
-brfss <- read.csv("Data/dataset-brfss-2013-subset1.csv")
+brfss <- read.csv("https://raw.githubusercontent.com/DDI-Talent/HDS_InteractiveTutorial/refs/heads/main/Data/dataset-brfss-2013-subset1.csv")
 
 tutorial_options(exercise.checker = gradethis::grade_learnr)
 
@@ -580,7 +580,7 @@ We will use data from dataset-brfss-2013-subset1.csv. The Behavioral Risk Factor
 
 We can use read_csv() from Tidyverse to load the data to R.
 ```{r loadData, exercise = TRUE, exercise.eval = FALSE}
-brfss <- read_csv("Data/dataset-brfss-2013-subset1.csv")
+brfss <- read_csv("https://raw.githubusercontent.com/DDI-Talent/HDS_InteractiveTutorial/refs/heads/main/Data/dataset-brfss-2013-subset1.csv")
 
 ```
 
